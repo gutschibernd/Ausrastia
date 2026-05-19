@@ -52,6 +52,17 @@ const char INDEX_HTML[] PROGMEM = R"HTML(<!DOCTYPE html>
 <main>
 
   <div class="card">
+    <h2>Verkabelung</h2>
+    <div class="info" style="font-size:14px;color:var(--fg)">
+      <b>Herz <span id="wHerz">–</span></b> &nbsp;→&nbsp; Daten-Leitung an <b>GPIO <span id="wPin">–</span></b>
+    </div>
+    <div class="info">
+      Die WS2812B-Data-Line dieses Herzens muss auf den oben angegebenen GPIO-Pin des ESP32 gelötet werden.
+      GND und 5V getrennt versorgen (gemeinsame Masse mit ESP nicht vergessen).
+    </div>
+  </div>
+
+  <div class="card">
     <h2>Pattern</h2>
     <div class="grid" id="patterns"></div>
   </div>
@@ -117,6 +128,8 @@ function connect(){
     const s = JSON.parse(ev.data);
     $("#dev").textContent = `${s.device}  ·  ${s.numLeds} LEDs`;
     $("#nLeds").textContent = s.numLeds;
+    $("#wHerz").textContent = s.deviceId;
+    $("#wPin").textContent = s.ledPin;
     document.querySelectorAll(".pat").forEach(e=>e.classList.toggle("sel", +e.dataset.id===s.pattern));
     $("#brightness").value=s.brightness; $("#vBrightness").textContent=s.brightness;
     $("#speed").value=s.speed; $("#vSpeed").textContent=s.speed;

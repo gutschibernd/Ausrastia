@@ -130,6 +130,7 @@ void broadcastState() {
   doc["device"]     = DEVICE_NAME;
   doc["deviceId"]   = DEVICE_ID;
   doc["numLeds"]    = NUM_LEDS;
+  doc["ledPin"]     = LED_PIN;
   String s; serializeJson(doc, s);
   ws.textAll(s);
 }
