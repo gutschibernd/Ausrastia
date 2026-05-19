@@ -207,6 +207,18 @@ void setup() {
 }
 
 void loop() {
+  static uint32_t lastBeat = 0;
+  static uint32_t frames = 0;
+  if (millis() - lastBeat >= 1000) {
+    Serial.printf("[alive] t=%lus  ip=%s  heap=%u  frames=%lu\n",
+                  millis()/1000,
+                  WiFi.localIP().toString().c_str(),
+                  (unsigned)ESP.getFreeHeap(),
+                  (unsigned long)frames);
+    lastBeat = millis();
+    frames = 0;
+  }
+
   ws.cleanupClients();
 
   if (st.testMap) {
@@ -225,5 +237,6 @@ void loop() {
     }
   }
   FastLED.show();
+  frames++;
   delay(1000 / 60); // ~60 FPS
 }
